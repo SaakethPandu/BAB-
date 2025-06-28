@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAB network</title>
+    <link rel="icon" type="image/png" href="media/logo_small.jpg">
+    <link href="https://fonts.bunny.net/css?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8700c5;
+            --primary-dark: #bcc600;
+            --primary-light: #8700c5;
+            --secondary: #3498db;
+            --tertiary: #8700c5;
+            --background: #8700c5;
+            --background-light: #1e1e1e;
+            --card-bg: #2c3034;
+            --card-border: #3a3f44;
+            --text: #ffffff;
+            --text-muted: #b0b0b0;
+            --discord: #5865F2;
+            --roundness: 12px;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--background-light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-light);
+        }
+
+        .text-gradient {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: var(--roundness);
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-discord {
+            background-color: var(--discord);
+            color: #fff;
+        }
+
+        .btn-discord:hover {
+            background-color: #4752c4;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: rgba(18, 18, 18, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-logo {
+            height: 40px;
+            transition: var(--transition);
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(2, 219, 2, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: var(--roundness);
+            border: 1px solid var(--primary);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .user-badge:hover {
+            background-color: rgba(2, 219, 2, 0.2);
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 300px;
+            height: 100vh;
+            background-color: var(--background-light);
+            z-index: 1001;
+            transition: var(--transition);
+            padding: 2rem;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu .nav-links {
+            flex-direction: column;
+            margin-top: 3rem;
+        }
+
+        .mobile-menu .nav-link {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1627855437693-dcc7b0c4ba7c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+        }
+
+        .hero-logo {
+            max-width: 400px;
+            width: 100%;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 20px rgba(255, 209, 5, 0.5));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+            max-width: 800px;
+        }
+
+        .server-ip {
+            background-color: rgba(186, 0, 253, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: var(--roundness);
+            padding: 1rem 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .server-ip:hover {
+            background-color: rgba(0, 21, 255, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .server-ip::after {
+            content: 'Click to copy';
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-muted);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .bg-dark {
+            background-color: var(--background);
+        }
+
+        .bg-light {
+            background-color: var(--background-light);
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            border-radius: var(--roundness);
+            padding: 2rem;
+            transition: var(--transition);
+            border: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Discord Section */
+        .discord-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .discord-widget {
+            flex: 1;
+            min-width: 300px;
+            height: 500px;
+            border-radius: var(--roundness);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .discord-info {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+        }
+
+        .discord-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .discord-info ul {
+            list-style-type: none;
+            margin-bottom: 2rem;
+        }
+
+        .discord-info li {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .discord-info li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        /* Team Section */
+        .team {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .team-member {
+            background-color: var(--card-bg);
+            border-radius: var(--roundness);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid var(--card-border);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .member-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .member-info {
+            padding: 1.5rem;
+        }
+
+        .member-role {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .role-owner {
+            background-color: rgba(52, 152, 219, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        .role-admin {
+            background-color: rgba(248, 47, 47, 0.2);
+            color: var(--tertiary);
+            border: 1px solid var(--tertiary);
+        }
+
+        .role-supporter {
+            background-color: rgba(0, 248, 255, 0.2);
+            color: #00f8ff;
+            border: 1px solid #00f8ff;
+        }
+
+        .member-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-bio {
+            color: var(--text-muted);
+        }
+
+        /* Join Section */
+        .join-methods {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .join-method {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--card-bg);
+            border-radius: var(--roundness);
+            padding: 2rem;
+            transition: var(--transition);
+            border: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .join-method:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .method-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .method-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            text-align: left;
+        }
+
+        .method-label {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .method-value {
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #000;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(255, 251, 0, 0.1);
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: var(--background-light);
+            border-radius: var(--roundness);
+            width: 90%;
+            max-width: 400px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transform: translateY(-50px);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--tertiary);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border-radius: var(--roundness);
+            border: 1px solid var(--card-border);
+            background-color: var(--background);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(200, 0, 255, 0.2);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: var(--roundness);
+            background-color: var(--primary);
+            color: #000;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .form-submit:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .form-footer a {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .form-error {
+            color: var(--tertiary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .form-success {
+            color: var(--primary);
+            font-size: 1rem;
+            text-align: center;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .welcome-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--roundness);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            animation: slideIn 0.5s ease-out;
+            display: none;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 6rem 1rem 4rem;
+            }
+
+            .hero-logo {
+                max-width: 300px;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .server-ip {
+                font-size: 1.2rem;
+                padding: 0.8rem 1.5rem;
+            }
+
+            .section {
+                padding: 4rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 1rem;
+            }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .server-ip {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Message -->
+    <div class="welcome-message" id="welcomeMessage"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#">
+            <img src="media/logo bahaiiiiii.jpg" class="navbar-logo">
+        </a>
+        <div class="nav-links">
+            <a href="https://wiki.example.com/" class="nav-link">Wiki</a>
+            <a href="#discord" class="nav-link scroll">Community</a>
+            <a href="#about" class="nav-link scroll">About Us</a>
+            <div id="userAuthSection">
+                <!-- This will be dynamically populated with either login button or user badge -->
+                <button class="btn btn-primary" id="usernameBtn">Enter Minecraft Username</button>
+            </div>
+        </div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="nav-links">
+            <a href="https://wiki.example.com/" class="nav-link">Wiki</a>
+            <a href="#discord" class="nav-link scroll">Community</a>
+            <a href="#about" class="nav-link scroll">About Us</a>
+            <div id="mobileUserAuthSection">
+                <!-- This will be dynamically populated with either login button or user badge -->
+                <button class="btn btn-primary" id="mobileUsernameBtn" style="width: 100%; margin-top: 1rem;">Enter Minecraft Username</button>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Username Modal -->
+    <div class="modal" id="usernameModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeUsernameModal">&times;</span>
+            <h2 class="modal-title">Enter Minecraft Username</h2>
+            <form id="usernameForm">
+                <div class="form-group">
+                    <label for="minecraftUsername" class="form-label">Your Minecraft Username</label>
+                    <input type="text" id="minecraftUsername" class="form-input" required>
+                    <div class="form-error" id="usernameError"></div>
+                </div>
+                <button type="submit" class="form-submit" id="usernameSubmitBtn">
+                    <span id="usernameBtnText">Submit</span>
+                </button>
+                <div class="form-success" id="usernameSuccess"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <img src="media/logo bahaiiiiii.jpg" alt="BAB Network" class="hero-logo animate">
+        <h1 class="hero-title animate delay-1">Welcome to <span class="text-gradient">BAB network</span></h1>
+        <p class="hero-subtitle animate delay-2">The most immersive Minecraft experience you'll ever play</p>
+        <div class="server-ip animate delay-3" id="serverIp">
+            mc.babnetwork.xyz
+        </div>
+        <a href="#features" class="scroll-down scroll animate delay-3">
+            <i class="fas fa-chevron-down"></i>
+        </a>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section bg-light" id="features">
+        <h2 class="section-title">Server Features</h2>
+        <div class="features">
+            <div class="feature-card animate">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Anti-Grief Protection</h3>
+                <p>Your builds are safe with our advanced protection system that prevents griefing and theft.</p>
+            </div>
+            <div class="feature-card animate delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-dragon"></i>
+                </div>
+                <h3 class="feature-title">Custom Mobs</h3>
+                <p>Experience challenging new mobs with unique abilities that make survival more exciting.</p>
+            </div>
+            <div class="feature-card animate delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-chess-queen"></i>
+                </div>
+                <h3 class="feature-title">Factions & Kingdoms</h3>
+                <p>Join or create your own faction, build kingdoms, and compete for dominance.</p>
+            </div>
+            <div class="feature-card animate delay-3">
+                <div class="feature-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <h3 class="feature-title">Economy System</h3>
+                <p>Buy, sell, and trade with our player-driven economy and custom shops.</p>
+            </div>
+            <div class="feature-card animate">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3 class="feature-title">Regular Events</h3>
+                <p>Participate in weekly events with amazing prizes and unique challenges.</p>
+            </div>
+            <div class="feature-card animate delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h3 class="feature-title">Custom Enchants</h3>
+                <p>Discover powerful new enchantments that aren't available in vanilla Minecraft.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Discord Section -->
+    <section class="section bg-dark" id="discord">
+        <h2 class="section-title">Join Our Community</h2>
+        <div class="discord-container">
+            <div class="discord-info">
+                <h3>Connect With Us</h3>
+                <ul>
+                    <li>Get the latest server updates and announcements</li>
+                    <li>Meet other players and make new friends</li>
+                    <li>Get help from our friendly staff team</li>
+                    <li>Participate in community events and giveaways</li>
+                    <li>Share your builds and get feedback</li>
+                </ul>
+                <a href="https://discord.gg/hUsggBydFe" class="btn btn-discord">
+                    <i class="fab fa-discord"></i> Join Discord
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section bg-light" id="about">
+        <h2 class="section-title">Meet The Team</h2>
+        <div class="team">
+            <div class="team-member animate">
+                <img src="https://yt3.googleusercontent.com/pDxxrM5n4c4gMopdCTlt_LpGlqKxpp62gIZjVFdwumvJeLEAwc3Qz2LpHsHIr1YfY7cwQ57R=s160-c-k-c0x00ffffff-no-rj" alt="Server Owner" class="member-image">
+                <div class="member-info">
+                    <span class="member-role role-owner">Owner</span>
+                    <h3 class="member-name">AKHIL</h3>
+                    <p class="member-bio">The creator and visionary behind BAB network. Ensures the server stays true to its roots while innovating.</p>
+                </div>
+            </div>
+            <div class="team-member animate delay-1">
+                <img src="https://yt3.googleusercontent.com/uimmtjPsHeMQZqTJT-6THD9LKJh7BLH81YdF5VgvbyZkLYBDf7ZwPJpdNz51sP2MYgAJaB1iJaI=s120-c-k-c0x00ffffff-no-rj" alt="Server Admin" class="member-image">
+                <div class="member-info">
+                    <span class="member-role role-admin">Admin</span>
+                    <h3 class="member-name">BANGARAM</h3>
+                    <p class="member-bio">Keeps the server running smoothly and deals with any issues that arise.</p>
+                </div>
+            </div>
+            <div class="team-member animate delay-2">
+                <img src="https://yt3.googleusercontent.com/gzHSgUFxHlFN5DHYTzT96M2FvMFNaMocmZMb6-HLF3CrBqebqiKCuMjsm49e8HoNxMO-Ev4EEw=s160-c-k-c0x00ffffff-no-rj" alt="Server Mod" class="member-image">
+                <div class="member-info">
+                    <span class="member-role role-supporter">Moderator</span>
+                    <h3 class="member-name">ABHINAV</h3>
+                    <p class="member-bio">Helps maintain order and ensures everyone follows the rules.</p>
+                </div>
+            </div>
+            <div class="team-member animate delay-3">
+                <img src="https://cdn.discordapp.com/attachments/1362058394076188683/1388049084673298575/download.jpg?ex=685f90f2&is=685e3f72&hm=6595328f0ae72f68a3f0f73cdf57ce58fa3223ca8671a6969669e97844a7868f&" alt="Server Builder" class="member-image">
+                <div class="member-info">
+                    <span class="member-role role-supporter">Developer</span>
+                    <h3 class="member-name">Anirban</h3>
+                    <p class="member-bio">who develops everything in the BAB network.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Section -->
+    <section class="section bg-dark" id="join">
+        <h2 class="section-title">How To Join</h2>
+        <div class="join-methods">
+            <div class="join-method animate">
+                <h3 class="method-title">Java Edition</h3>
+                <div class="method-details">
+                    <span class="method-label">Server IP:</span>
+                    <span class="method-value">mc.babnetwork.xyz</span>
+                    <span class="method-label">Version:</span>
+                    <span class="method-value">1.20.1(Flexible)</span>
+                </div>
+            </div>
+            <div class="join-method animate delay-1">
+                <h3 class="method-title">Bedrock Edition(Coming soon)</h3>
+                <div class="method-details">
+                    <span class="method-label">Server IP:</span>
+                    <span class="method-value">coming soon</span>
+                    <span class="method-label">Port:   </span>
+                    <span class="method-value">coming soon</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 BAB network . All rights reserved.</p>
+        <p>Made with <i class="fas fa-heart" style="color: var(--tertiary);"></i> by the BAB Team</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ================= COOKIE FUNCTIONS ================= //
+            function setCookie(name, value, days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                const expires = "expires=" + date.toUTCString();
+                document.cookie = name + "=" + value + ";" + expires + ";path=/";
+            }
+
+            function getCookie(name) {
+                const cookieName = name + "=";
+                const decodedCookie = decodeURIComponent(document.cookie);
+                const cookieArray = decodedCookie.split(';');
+                for(let i = 0; i < cookieArray.length; i++) {
+                    let cookie = cookieArray[i];
+                    while (cookie.charAt(0) === ' ') {
+                        cookie = cookie.substring(1);
+                    }
+                    if (cookie.indexOf(cookieName) === 0) {
+                        return cookie.substring(cookieName.length, cookie.length);
+                    }
+                }
+                return "";
+            }
+
+            function deleteCookie(name) {
+                document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            }
+
+            // ================= UI ELEMENTS ================= //
+            const usernameModal = document.getElementById('usernameModal');
+            const usernameForm = document.getElementById('usernameForm');
+            const usernameBtn = document.getElementById('usernameBtn');
+            const mobileUsernameBtn = document.getElementById('mobileUsernameBtn');
+            const closeUsernameModal = document.getElementById('closeUsernameModal');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('overlay');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            const userAuthSection = document.getElementById('userAuthSection');
+            const mobileUserAuthSection = document.getElementById('mobileUserAuthSection');
+
+            // ================= USER BADGE CREATION ================= //
+            function createUserBadge(username) {
+                const firstLetter = username.charAt(0).toUpperCase();
+                
+                const badge = document.createElement('div');
+                badge.className = 'user-badge';
+                badge.id = 'userBadge';
+                badge.innerHTML = `
+                    <div class="user-avatar">${firstLetter}</div>
+                    <span>${username}</span>
+                `;
+                
+                // Add click event to show welcome message
+                badge.addEventListener('click', () => {
+                    showWelcomeMessage(username);
+                });
+                
+                return badge;
+            }
+
+            function updateAuthUI(username) {
+                if (username) {
+                    // Replace login button with user badge in desktop nav
+                    userAuthSection.innerHTML = '';
+                    userAuthSection.appendChild(createUserBadge(username));
+                    
+                    // Replace login button with user badge in mobile nav
+                    mobileUserAuthSection.innerHTML = '';
+                    mobileUserAuthSection.appendChild(createUserBadge(username));
+                } else {
+                    // Show login buttons if no username
+                    userAuthSection.innerHTML = '<button class="btn btn-primary" id="usernameBtn">Enter Minecraft Username</button>';
+                    mobileUserAuthSection.innerHTML = '<button class="btn btn-primary" id="mobileUsernameBtn" style="width: 100%; margin-top: 1rem;">Enter Minecraft Username</button>';
+                    
+                    // Reattach event listeners to new buttons
+                    document.getElementById('usernameBtn').addEventListener('click', openModal);
+                    document.getElementById('mobileUsernameBtn').addEventListener('click', openModal);
+                }
+            }
+
+            // ================= MODAL MANAGEMENT ================= //
+            function openModal() {
+                usernameModal.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal() {
+                usernameModal.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            // ================= USERNAME HANDLING ================= //
+            function showWelcomeMessage(username) {
+                welcomeMessage.textContent = `Welcome, ${username}!`;
+                welcomeMessage.style.display = 'block';
+                
+                // Hide after 5 seconds
+                setTimeout(() => {
+                    welcomeMessage.style.display = 'none';
+                }, 5000);
+            }
+
+            function validateUsername(username) {
+                if (!username) {
+                    return 'Please enter a Minecraft username';
+                }
+                
+                if (username.length < 3 || username.length > 16) {
+                    return 'Username must be 3-16 characters';
+                }
+                
+                if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                    return 'Only letters, numbers and underscores allowed';
+                }
+                
+                return null;
+            }
+
+            usernameForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const usernameInput = document.getElementById('minecraftUsername');
+                const username = usernameInput.value.trim();
+                const errorElement = document.getElementById('usernameError');
+                const successElement = document.getElementById('usernameSuccess');
+                
+                // Validate
+                const validationError = validateUsername(username);
+                if (validationError) {
+                    errorElement.textContent = validationError;
+                    errorElement.style.display = 'block';
+                    successElement.style.display = 'none';
+                    return;
+                }
+                
+                // Store in cookie (30 days expiration)
+                setCookie('mc_username', username, 30);
+                
+                // Update UI to show user badge
+                updateAuthUI(username);
+                
+                // Show success
+                errorElement.style.display = 'none';
+                successElement.textContent = `Welcome, ${username}! Your username has been saved.`;
+                successElement.style.display = 'block';
+                
+                // Show welcome message
+                showWelcomeMessage(username);
+                
+                // Close modal after 2 seconds
+                setTimeout(() => {
+                    closeModal();
+                    usernameInput.value = '';
+                    successElement.style.display = 'none';
+                }, 2000);
+            });
+
+            // ================= INITIALIZATION ================= //
+            function init() {
+                // Check for existing username cookie
+                const savedUsername = getCookie('mc_username');
+                if (savedUsername) {
+                    updateAuthUI(savedUsername);
+                    showWelcomeMessage(savedUsername);
+                }
+                
+                // Set up event listeners for initial login buttons
+                usernameBtn.addEventListener('click', openModal);
+                mobileUsernameBtn.addEventListener('click', openModal);
+                closeUsernameModal.addEventListener('click', closeModal);
+                overlay.addEventListener('click', closeModal);
+
+                // Mobile menu toggle
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+                });
+                
+                // Copy IP to clipboard
+                document.getElementById('serverIp').addEventListener('click', function() {
+                    navigator.clipboard.writeText('mc.babnetwork.xyz');
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'copy-tooltip';
+                    tooltip.textContent = 'Copied!';
+                    this.appendChild(tooltip);
+                    setTimeout(() => tooltip.remove(), 2000);
+                });
+                
+                // Smooth scrolling for anchor links
+                document.querySelectorAll('.scroll').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Close mobile menu if open
+                            mobileMenu.classList.remove('active');
+                            overlay.classList.remove('active');
+                            document.body.style.overflow = '';
+                        }
+                    });
+                });
+            }
+
+            init();
+        });
+    </script>
+</body>
+</html>
